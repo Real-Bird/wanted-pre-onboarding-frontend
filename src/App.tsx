@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Navigate, Outlet } from "react-router-dom";
 
 function App() {
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("wtd-token")) {
+      setHasToken(true);
+    }
+  }, [hasToken]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HelmetProvider>
+      <Helmet>
+        <title>Home :: WTDPOFE</title>
+      </Helmet>
+      {hasToken ? (
+        <Navigate to={"todo"} replace />
+      ) : (
+        <Navigate to={"signin"} replace />
+      )}
+      <Outlet />
+    </HelmetProvider>
   );
 }
 
