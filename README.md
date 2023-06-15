@@ -4,4 +4,12 @@
 
 ## 설치, 환경설정 및 실행 방법
 
-## 데모
+```bash
+git clone https://github.com/Real-Bird/wanted-pre-onboarding-frontend.git
+npm install
+npm start
+```
+
+## 데모 링크
+
+[Wanted FE To Do List](https://wtd-fe-rb.netlify.app/)
