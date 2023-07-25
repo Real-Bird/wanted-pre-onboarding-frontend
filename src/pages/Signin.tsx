@@ -1,6 +1,6 @@
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
+import { Layout } from "../components/common";
 import { useFetch } from "../lib/hooks/useFetch";
 import { signinAuth } from "../api/auth";
 import SignForm from "../components/Sign/SignForm";

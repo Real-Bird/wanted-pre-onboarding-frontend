@@ -1,35 +1,18 @@
 import { Link } from "react-router-dom";
-import { cls } from "../../lib/util";
+import { cls } from "../../../lib/util";
+import { type ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
-  label: string;
-  disabled?: boolean;
-  onClick?: () => void;
-  path?: string;
-  testId?: string;
-  className?: string;
-}
-
-const Button = ({
-  label,
-  disabled,
-  onClick,
-  path,
-  testId,
-  className = "",
-}: ButtonProps) => {
+export const Button = ({ label, path, testId, ...btnAttrs }: ButtonProps) => {
   return (
     <>
       {path ? (
         <Link to={path}>
           <button
             data-testid={testId}
+            {...btnAttrs}
             className={cls(
-              className,
               "bg-red-500 hover:bg-red-600 disabled:bg-neutral-400 text-white shadow-md active:shadow-none w-fit px-2 py-0.5 disabled:shadow-none active:text-gray-200 rounded-md shadow-slate-500"
             )}
-            disabled={disabled}
-            onClick={onClick}
           >
             {label}
           </button>
@@ -37,12 +20,10 @@ const Button = ({
       ) : (
         <button
           data-testid={testId}
+          {...btnAttrs}
           className={cls(
-            className,
             "bg-red-500 hover:bg-red-600 disabled:bg-neutral-400 text-white shadow-md active:shadow-none w-fit px-2 py-0.5 disabled:shadow-none active:text-gray-200 rounded-md shadow-slate-500"
           )}
-          disabled={disabled}
-          onClick={onClick}
         >
           {label}
         </button>
@@ -51,4 +32,8 @@ const Button = ({
   );
 };
 
-export default Button;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  label: string;
+  path?: string;
+  testId?: string;
+}

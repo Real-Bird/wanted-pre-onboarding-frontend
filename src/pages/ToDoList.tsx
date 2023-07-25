@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Input from "../components/Input";
-import Layout from "../components/Layout";
-import Button from "../components/Button";
 import {
   ResponseToDoType,
   createTodo,
@@ -10,7 +7,8 @@ import {
   updateTodo,
 } from "../api/todo";
 import { useFetch } from "../lib/hooks/useFetch";
-import ToDoCard from "../components/ToDoCard";
+import { Button, Input, Layout } from "../components/common";
+import { MemoToDoCard } from "../components/ToDo";
 
 const ToDoList = () => {
   const newTodoRef = useRef<HTMLInputElement>(null);
@@ -50,7 +48,7 @@ const ToDoList = () => {
     <Layout title="TO DO LIST" isLogged={true}>
       <article className="flex w-full justify-center items-end space-x-3">
         <Input
-          inputRef={newTodoRef}
+          ref={newTodoRef}
           label="What's New To Do?"
           type="text"
           testId="new-todo-input"
@@ -63,7 +61,7 @@ const ToDoList = () => {
       </article>
       <ul className="w-full h-fit max-h-[75%] mt-14 space-y-5 overflow-y-scroll py-4 px-2">
         {todoList?.map((todo) => (
-          <ToDoCard
+          <MemoToDoCard
             key={todo.id}
             editTodoRef={editTodoRef}
             onEditTodoSubmit={onEditTodoSubmit}
