@@ -1,7 +1,6 @@
 import { RefObject } from "react";
 import { type FormHTMLAttributes } from "react";
-import Input from "../../Input";
-import Button from "../../Button";
+import { Button, Input } from "../../common";
 
 const SignForm = ({
   emailRef,
@@ -20,7 +19,7 @@ const SignForm = ({
       className="flex flex-col items-center h-fit mt-10 space-y-5"
     >
       <Input
-        inputRef={emailRef}
+        ref={emailRef}
         label="Email"
         type="email"
         testId="email-input"
@@ -30,7 +29,7 @@ const SignForm = ({
         <p className="text-bold text-lg text-red-500">{emailError}</p>
       )}
       <Input
-        inputRef={passwordRef}
+        ref={passwordRef}
         label="Password"
         type="password"
         testId="password-input"

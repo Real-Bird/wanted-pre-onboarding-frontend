@@ -1,10 +1,10 @@
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
 import { useFetch } from "../lib/hooks/useFetch";
 import { signupAuth } from "../api/auth";
 import SignForm from "../components/Sign/SignForm";
 import SignConvert from "../components/Sign/SignConvert";
+import { Layout } from "../components/common";
 
 const Signup = () => {
   const navigate = useNavigate();
