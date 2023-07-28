@@ -1,8 +1,19 @@
-import { Navigate, createBrowserRouter, useLocation } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import ToDoList from "./pages/ToDoList";
+import { HttpClient } from "./instances/HttpClient";
+import { TokenStorage } from "./instances/TokenStorage";
+import { LocalStorage } from "./instances/LocalStorage";
+import { AuthService } from "./instances/AuthService";
+import SignupProvider from "./contexts/signupService";
+import SigninProvider from "./contexts/signinService";
+
+const localStorage = new LocalStorage();
+const tokenStorage = new TokenStorage(localStorage);
+const httpClient = new HttpClient(tokenStorage);
+const authService = new AuthService(httpClient, tokenStorage);
 
 const router = createBrowserRouter([
   {
@@ -12,50 +23,25 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: (
-          <AlreadyAuth>
+          <SignupProvider authService={authService}>
             <Signup />
-          </AlreadyAuth>
+          </SignupProvider>
         ),
       },
       {
         path: "signin",
         element: (
-          <AlreadyAuth>
+          <SigninProvider authService={authService}>
             <Signin />
-          </AlreadyAuth>
+          </SigninProvider>
         ),
       },
       {
         path: "todo",
-        element: (
-          <RequireAuth>
-            <ToDoList />
-          </RequireAuth>
-        ),
+        element: <ToDoList />,
       },
     ],
   },
 ]);
 
 export default router;
-
-function RequireAuth({ children }: { children: JSX.Element }) {
-  const auth = localStorage.getItem("wtd-token");
-  const location = useLocation();
-
-  if (!auth) {
-    return <Navigate to="/signin" state={{ from: location }} replace />;
-  }
-
-  return children;
-}
-
-function AlreadyAuth({ children }: { children: JSX.Element }) {
-  const auth = localStorage.getItem("wtd-token");
-  const location = useLocation();
-  if (auth) {
-    return <Navigate to="/todo" state={{ from: location }} replace />;
-  }
-
-  return children;
-}

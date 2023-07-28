@@ -1,15 +1,14 @@
 import { TokenStorage } from "./TokenStorage";
 
 export class HttpClient {
-  private readonly BASE_URL = "https://www.pre-onboarding-selection-task.shop/";
+  // private readonly BASE_URL = "https://www.pre-onboarding-selection-task.shop/";
+  private readonly BASE_URL = "http://localhost:8000/";
   private readonly ACCESS_TOKEN;
-  private pathname: string;
-  constructor(pathname: string, tokenStorage: TokenStorage) {
-    this.pathname = pathname;
+  constructor(tokenStorage: TokenStorage) {
     this.ACCESS_TOKEN = tokenStorage.get();
   }
-  fetch(url: string, options?: RequestInit) {
-    return window.fetch(url, {
+  fetch(pathname: string, options?: RequestInit) {
+    return window.fetch(`${this.BASE_URL}${pathname}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",

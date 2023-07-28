@@ -13,7 +13,6 @@ export function useFetch<T>(asyncFn: () => Promise<T>, hasTrigger?: boolean) {
     setState({ ...state, loading: true });
     try {
       const data = await asyncFn();
-
       setState({
         ...state,
         state: data as T,
