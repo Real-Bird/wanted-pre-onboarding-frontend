@@ -25,9 +25,12 @@ export class TokenStorage {
   }
 
   initializedToken() {
-    const token: TokenType = JSON.parse(
-      this.localStorage.get(this.TOKEN_KEY) as string
-    );
+    const alreadyToken = this.localStorage.get(this.TOKEN_KEY);
+    if (!alreadyToken?.includes("expiry_time")) {
+      this.localStorage.remove(this.TOKEN_KEY);
+      return;
+    }
+    const token: TokenType = JSON.parse(alreadyToken);
     if (!token) {
       return;
     }
