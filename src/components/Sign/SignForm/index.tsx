@@ -8,8 +8,6 @@ const SignForm = ({
   emailError,
   passwordError,
   loading,
-  onResetEmailError,
-  onResetPasswordError,
   isSignIn,
   ...formAttrs
 }: SignFormProps) => {
@@ -18,13 +16,7 @@ const SignForm = ({
       {...formAttrs}
       className="flex flex-col items-center h-fit mt-10 space-y-5"
     >
-      <Input
-        ref={emailRef}
-        label="Email"
-        type="email"
-        testId="email-input"
-        onFocus={onResetEmailError}
-      />
+      <Input ref={emailRef} label="Email" type="email" testId="email-input" />
       {emailError && (
         <p className="text-bold text-lg text-red-500">{emailError}</p>
       )}
@@ -33,7 +25,6 @@ const SignForm = ({
         label="Password"
         type="password"
         testId="password-input"
-        onFocus={onResetPasswordError}
       />
       {passwordError && (
         <p className="text-bold text-lg text-red-500">{passwordError}</p>
@@ -55,7 +46,5 @@ interface SignFormProps extends FormHTMLAttributes<HTMLFormElement> {
   emailError: string;
   passwordError: string;
   loading: boolean;
-  onResetEmailError?: () => void;
-  onResetPasswordError?: () => void;
   isSignIn: boolean;
 }

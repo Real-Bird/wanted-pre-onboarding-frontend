@@ -17,7 +17,7 @@ export class AuthService {
     });
 
     if (data.status !== 201) {
-      const res: ResponseSignup = await data.json();
+      const res: ResponseError = await data.json();
       return {
         ok: false,
         message: res.message,
@@ -27,19 +27,24 @@ export class AuthService {
   }
 
   async signin(body: RequestBodyType) {
-    try {
-      const { access_token }: ResponseSignin = await (
-        await this.httpClient.fetch(`auth/signin`, {
-          method: "POST",
-          body: JSON.stringify(body),
-        })
-      ).json();
+    const data: ResponseSignin = await (
+      await this.httpClient.fetch(`auth/signin`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      })
+    ).json();
 
-      this.tokenStorage.save(access_token);
-      return { ok: true, message: "성공적으로 로그인했습니다!" };
-    } catch (e) {
-      const error = e as Error;
-      throw { ok: false, message: error.message };
+    switch (data.statusCode) {
+      case 404: {
+        return { ok: false, message: data.message };
+      }
+      case 401: {
+        return { ok: false, message: "잘못된 사용자 정보입니다." };
+      }
+      default: {
+        this.tokenStorage.save(data.access_token);
+        return { ok: true, message: "성공적으로 로그인했습니다!" };
+      }
     }
   }
 }
@@ -49,12 +54,12 @@ type RequestBodyType = {
   password: string;
 };
 
-export type ResponseSignup = {
-  error: string;
+type ResponseError = {
+  error?: string;
   message: string;
   statusCode: number;
 };
 
 export type ResponseSignin = {
   access_token: string;
-};
+} & ResponseError;

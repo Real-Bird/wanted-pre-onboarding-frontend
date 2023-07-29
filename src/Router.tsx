@@ -18,7 +18,7 @@ const authService = new AuthService(httpClient, tokenStorage);
 const router = createBrowserRouter([
   {
     path: "",
-    element: <App />,
+    element: <TokenValidate tokenStorage={tokenStorage} />,
     children: [
       {
         path: "signup",
@@ -43,5 +43,15 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+function TokenValidate({ tokenStorage }: TokenValidateProps) {
+  tokenStorage.initializedToken();
+  const hasToken = !!tokenStorage.get();
+  return <App hasToken={hasToken} />;
+}
+
+interface TokenValidateProps {
+  tokenStorage: TokenStorage;
+}
 
 export default router;

@@ -17,15 +17,10 @@ const Signup = () => {
     onVerifiedError,
     state,
     loading,
-    error,
   } = useSignup();
 
   useEffect(() => {
     if (!emailRef.current?.value || !passwordRef.current?.value || loading) {
-      return;
-    }
-    if (error) {
-      console.error(error);
       return;
     }
     if (state?.ok) {

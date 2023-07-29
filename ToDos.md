@@ -1,5 +1,11 @@
 # To Dos
 
+## 23.07.29
+
+- [x] auth services에서 `Sign In` 서비스 로직 분리
+- [x] 토큰 여부에 따른 리디렉션(있으면 `/todo`, 없으면 `/signin`)
+- [x] 이전에 생성된 expiry_time 없는 토큰과 만료된 토큰 제거
+
 ## 23.07.28~29
 
 - [x] auth services에서 `Sign Up` 서비스 로직 분리

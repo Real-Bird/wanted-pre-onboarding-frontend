@@ -25,11 +25,19 @@ export class TokenStorage {
   }
 
   initializedToken() {
-    const tokenExpiryTime: number = JSON.parse(
-      JSON.stringify(this.localStorage.get(this.TOKEN_KEY))
-    ).expiry_time;
-    if (tokenExpiryTime <= Date.now()) {
+    const token: TokenType = JSON.parse(
+      this.localStorage.get(this.TOKEN_KEY) as string
+    );
+    if (!token) {
+      return;
+    }
+    if (!token.expiry_time || token.expiry_time <= Date.now()) {
       this.localStorage.remove(this.TOKEN_KEY);
     }
   }
 }
+
+type TokenType = {
+  value: string;
+  expiry_time: number;
+};

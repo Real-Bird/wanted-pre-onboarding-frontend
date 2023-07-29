@@ -1,21 +1,21 @@
 import { FormEvent, useRef, useState } from "react";
-import { useSignupContext } from "../../contexts/signupService";
 import { useFetch } from "../useFetch";
+import { useSigninContext } from "../../contexts/signinService";
 
-function useSignup() {
+function useSignin() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const [signupError, setSignupError] = useState({
+  const [signinError, setSigninError] = useState({
     emailError: "",
     passwordError: "",
   });
-  const { signup } = useSignupContext();
+  const { signin } = useSigninContext();
   const { state, onFetching, loading, error } = useFetch<{
     ok: boolean;
     message?: string;
   }>(
     () =>
-      signup({
+      signin({
         email: emailRef.current?.value ?? "",
         password: passwordRef.current?.value ?? "",
       }),
@@ -23,7 +23,7 @@ function useSignup() {
   );
 
   const onVerifiedError = () => {
-    setSignupError({
+    setSigninError({
       emailError: "",
       passwordError: "",
     });
@@ -31,14 +31,14 @@ function useSignup() {
     const password = passwordRef.current?.value;
 
     if (email && !email.includes("@")) {
-      setSignupError((prev) => ({
+      setSigninError((prev) => ({
         ...prev,
         emailError: "이메일에는 '@'가 포함되어야 합니다.",
       }));
       return;
     }
     if (password && password.length < 8) {
-      setSignupError((prev) => ({
+      setSigninError((prev) => ({
         ...prev,
         passwordError: "비밀번호를 8자 이상 입력하세요.",
       }));
@@ -46,7 +46,7 @@ function useSignup() {
     }
   };
 
-  const onCompleteSignup = (e: FormEvent) => {
+  const onCompleteSignin = (e: FormEvent) => {
     e.preventDefault();
     onFetching();
   };
@@ -57,10 +57,10 @@ function useSignup() {
     error,
     emailRef,
     passwordRef,
-    signupError,
-    onCompleteSignup,
+    signinError,
+    onCompleteSignin,
     onVerifiedError,
   };
 }
 
-export default useSignup;
+export default useSignin;
