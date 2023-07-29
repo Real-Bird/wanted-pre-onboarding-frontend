@@ -6,7 +6,7 @@ import {
   getTodos,
   updateTodo,
 } from "../api/todo";
-import { useFetch } from "../lib/hooks/useFetch";
+import { useFetch } from "../hooks/useFetch";
 import { Button, Input, Layout } from "../components/common";
 import { MemoToDoCard } from "../components/ToDo";
 

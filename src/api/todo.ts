@@ -1,5 +1,4 @@
 const BASE_URL = "https://www.pre-onboarding-selection-task.shop";
-// const BASE_URL = "http://localhost:8000";
 const TOKEN_KEY = "wtd-token";
 
 export interface ResponseToDoType {
@@ -10,7 +9,9 @@ export interface ResponseToDoType {
 }
 
 export const createTodo = async (todo: string) => {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const { value: token }: { value: string; expiry_time: number } = JSON.parse(
+    JSON.stringify(localStorage.getItem(TOKEN_KEY))
+  );
   await (
     await fetch(`${BASE_URL}/todos`, {
       method: "POST",
@@ -21,12 +22,13 @@ export const createTodo = async (todo: string) => {
       body: JSON.stringify({ todo }),
     })
   ).json();
-
   return { ok: true };
 };
 
 export const getTodos = async () => {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const { value: token }: { value: string; expiry_time: number } = JSON.parse(
+    localStorage.getItem(TOKEN_KEY) as string
+  );
   const data: ResponseToDoType[] = await (
     await fetch(`${BASE_URL}/todos`, {
       method: "GET",
@@ -39,7 +41,9 @@ export const getTodos = async () => {
 };
 
 export const updateTodo = async (body: Partial<ResponseToDoType>) => {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const { value: token }: { value: string; expiry_time: number } = JSON.parse(
+    JSON.stringify(localStorage.getItem(TOKEN_KEY))
+  );
   const data = await (
     await fetch(`${BASE_URL}/todos/${body.id}`, {
       method: "PUT",
@@ -51,12 +55,13 @@ export const updateTodo = async (body: Partial<ResponseToDoType>) => {
     })
   ).json();
 
-  console.log(data);
   return { ok: true };
 };
 
 export const deleteTodo = async (id: number) => {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const { value: token }: { value: string; expiry_time: number } = JSON.parse(
+    JSON.stringify(localStorage.getItem(TOKEN_KEY))
+  );
   await fetch(`${BASE_URL}/todos/${id}`, {
     method: "DELETE",
     headers: {
