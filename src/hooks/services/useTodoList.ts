@@ -8,7 +8,7 @@ function useTodoList() {
   const newTodoRef = useRef<HTMLInputElement>(null);
   const editTodoRef = useRef<HTMLInputElement>(null);
   const [todoList, setTodoList] = useState<ResponseToDoType[]>([]);
-  const { state, loading, onFetching } = useFetch(() => getTodos());
+  const { state, loading, onFetching } = useFetch(getTodos);
   const onAddNewTodo = async () => {
     const newToDo = newTodoRef.current?.value;
     if (!newToDo) return;

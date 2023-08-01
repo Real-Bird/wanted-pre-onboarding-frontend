@@ -20,6 +20,7 @@ export function useFetch<T>(asyncFn: () => Promise<T>, hasTrigger?: boolean) {
       });
     } catch (e) {
       setState({ ...state, loading: false, error: e as Error });
+      throw new Error((e as Error).message);
     }
   };
 
