@@ -7,13 +7,16 @@ import { HttpClient } from "./instances/HttpClient";
 import { TokenStorage } from "./instances/TokenStorage";
 import { LocalStorage } from "./instances/LocalStorage";
 import { AuthService } from "./instances/AuthService";
+import { ToDoService } from "./instances/ToDoService";
 import SignupProvider from "./contexts/signupService";
 import SigninProvider from "./contexts/signinService";
+import ToDoProvider from "./contexts/toDoService";
 
 const localStorage = new LocalStorage();
 const tokenStorage = new TokenStorage(localStorage);
 const httpClient = new HttpClient(tokenStorage);
 const authService = new AuthService(httpClient, tokenStorage);
+const toDoService = new ToDoService(httpClient);
 
 const router = createBrowserRouter([
   {
@@ -38,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "todo",
-        element: <ToDoList />,
+        element: (
+          <ToDoProvider toDoService={toDoService}>
+            <ToDoList />
+          </ToDoProvider>
+        ),
       },
     ],
   },
