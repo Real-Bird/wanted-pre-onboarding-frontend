@@ -1,8 +1,8 @@
-import { RefObject, useState, memo, useEffect } from "react";
+import { RefObject, useState, memo, useEffect, ChangeEvent } from "react";
 import { cls } from "../../../lib/util";
-import { ResponseToDoType } from "../../../api/todo";
-import { Button, Input } from "../../common";
+import { Input } from "../../common";
 import { ToDoToggleEditBtn } from "../ToDoToggleEditBtn";
+import { ResponseToDoType } from "../../../instances/ToDoService";
 
 const ToDoCard = ({
   editTodoRef,
@@ -12,8 +12,11 @@ const ToDoCard = ({
   onDeleteTodo,
 }: ToDoCardProps) => {
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [editTodo, setEditTodo] = useState(todo.todo);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleEditTodo = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
 
   const onSubmitClick = () => {
     onEditTodoSubmit({ ...todo });
@@ -47,8 +50,8 @@ const ToDoCard = ({
           <Input
             type="text"
             ref={editTodoRef}
-            value={editTodo}
-            onChange={(e) => setEditTodo(e.target.value)}
+            defaultValue={todo.todo}
+            onChange={handleEditTodo}
           />
         ) : (
           <p
