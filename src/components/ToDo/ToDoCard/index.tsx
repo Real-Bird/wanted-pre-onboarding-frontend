@@ -1,4 +1,4 @@
-import { RefObject, useState, memo, useEffect, ChangeEvent } from "react";
+import { RefObject, useState, memo, useEffect } from "react";
 import { cls } from "../../../lib/util";
 import { Input } from "../../common";
 import { ToDoToggleEditBtn } from "../ToDoToggleEditBtn";
@@ -13,10 +13,6 @@ const ToDoCard = ({
 }: ToDoCardProps) => {
   const [toggleEdit, setToggleEdit] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const handleEditTodo = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-  };
 
   const onSubmitClick = () => {
     onEditTodoSubmit({ ...todo });
@@ -35,6 +31,12 @@ const ToDoCard = ({
     }
   }, [confirmDelete]);
 
+  useEffect(() => {
+    if (toggleEdit && editTodoRef.current) {
+      editTodoRef.current.value = todo.todo;
+    }
+  }, [toggleEdit]);
+
   return (
     <li className="flex justify-between items-center w-full space-x-6 bg-white px-3 py-5 rounded-md shadow-md">
       <Input
@@ -47,12 +49,7 @@ const ToDoCard = ({
       />
       <div className="bg-stone-300 flex-1 text-center p-1">
         {toggleEdit ? (
-          <Input
-            type="text"
-            ref={editTodoRef}
-            defaultValue={todo.todo}
-            onChange={handleEditTodo}
-          />
+          <Input type="text" ref={editTodoRef} />
         ) : (
           <p
             className={cls(
