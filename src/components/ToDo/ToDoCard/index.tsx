@@ -81,3 +81,5 @@ interface ToDoCardProps {
 }
 
 export const MemoToDoCard = memo(ToDoCard);
+
+export default ToDoCard;
