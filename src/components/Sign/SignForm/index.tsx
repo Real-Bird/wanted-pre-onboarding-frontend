@@ -14,8 +14,7 @@ const SignForm = ({
   return (
     <form
       {...formAttrs}
-      className="flex flex-col items-center h-fit mt-10 space-y-5"
-    >
+      className="flex flex-col items-center h-fit mt-10 space-y-5">
       <Input ref={emailRef} label="Email" type="email" testId="email-input" />
       {emailError && (
         <p className="text-bold text-lg text-red-500">{emailError}</p>

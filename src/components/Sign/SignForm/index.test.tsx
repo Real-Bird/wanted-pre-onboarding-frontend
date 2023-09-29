@@ -1,8 +1,8 @@
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import SignForm from ".";
 import { createRef } from "react";
 import userEvent from "@testing-library/user-event";
+import { expect, vi, describe, it } from "vitest";
 
 describe("<SignForm />", () => {
   const emailRef = createRef<HTMLInputElement>();
@@ -66,7 +66,7 @@ describe("<SignForm />", () => {
   });
 
   it("submits the form when the submit button is clicked", () => {
-    const onSubmitMock = jest.fn();
+    const onSubmitMock = vi.fn();
 
     render(
       <SignForm

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import { Input } from ".";
 import userEvent from "@testing-library/user-event";
 

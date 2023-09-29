@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import { Layout } from ".";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";

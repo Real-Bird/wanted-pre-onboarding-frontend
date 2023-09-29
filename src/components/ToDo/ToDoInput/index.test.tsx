@@ -1,13 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+
 import { ToDoInput } from ".";
 import { createRef } from "react";
 import userEvent from "@testing-library/user-event";
+import { expect, vi, describe, it } from "vitest";
+
+const mockOnAddNewTodo: (body: unknown) => void = vi.fn();
+const inputRef = createRef<HTMLInputElement>();
 
 describe("<ToDoInput />", () => {
-  const mockOnAddNewTodo = jest.fn();
-  const inputRef = createRef<HTMLInputElement>();
-
   it("renders correctly component", () => {
     render(
       <ToDoInput

@@ -1,8 +1,9 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+
 import ToDoCard from ".";
 import { createRef } from "react";
 import userEvent from "@testing-library/user-event";
+import { expect, vi, describe, it } from "vitest";
 
 const mockTodo = {
   userId: 1,
@@ -11,9 +12,9 @@ const mockTodo = {
   isCompleted: false,
 };
 
-const mockOnToggleCompleted = jest.fn();
-const mockOnEditTodoSubmit = jest.fn();
-const mockOnDeleteTodo = jest.fn();
+const mockOnToggleCompleted: (body: unknown) => void = vi.fn();
+const mockOnEditTodoSubmit: (body: unknown) => void = vi.fn();
+const mockOnDeleteTodo = vi.fn();
 
 describe("<ToDoCard />", () => {
   it("renders correctly", () => {
@@ -109,7 +110,7 @@ describe("<ToDoCard />", () => {
   });
 
   it("calls the correct function when the 삭제 button is clicked", () => {
-    global.confirm = jest.fn(() => true);
+    window.confirm = vi.fn(() => true);
     render(
       <ToDoCard
         onToggleCompleted={mockOnToggleCompleted}
@@ -122,7 +123,7 @@ describe("<ToDoCard />", () => {
 
     fireEvent.click(screen.getByText("삭제"));
 
-    expect(global.confirm).toHaveBeenCalledWith("정말 삭제하겠습니까?");
+    expect(window.confirm).toHaveBeenCalledWith("정말 삭제하겠습니까?");
     expect(mockOnDeleteTodo).toHaveBeenCalledWith(mockTodo.id);
   });
 });

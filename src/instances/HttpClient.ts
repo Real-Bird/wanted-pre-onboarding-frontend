@@ -8,7 +8,9 @@ export class HttpClient {
   }
 
   fetch(pathname: string, options?: RequestInit) {
-    const access_token = JSON.parse(this.tokenStorage.get() as string);
+    const access_token: { value: string; expiry_time: number } = JSON.parse(
+      this.tokenStorage.get() as string
+    );
 
     return window.fetch(`${this.BASE_URL}${pathname}`, {
       ...options,
