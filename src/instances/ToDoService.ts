@@ -35,7 +35,9 @@ export class ToDoService {
     }
   }
 
-  async updateTodo(body: Partial<ResponseToDoType>) {
+  async updateTodo(
+    body: Pick<ResponseToDoType, "id" | "todo" | "isCompleted">
+  ) {
     try {
       const updateTodoData: ResponseToDoType = await (
         await this.httpClient.fetch(`todos/${body.id}`, {

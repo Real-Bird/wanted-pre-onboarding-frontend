@@ -12,8 +12,7 @@ export const Button = ({ label, path, testId, ...btnAttrs }: ButtonProps) => {
             {...btnAttrs}
             className={cls(
               "bg-red-500 hover:bg-red-600 disabled:bg-neutral-400 text-white shadow-md active:shadow-none w-fit px-2 py-0.5 disabled:shadow-none active:text-gray-200 rounded-md shadow-slate-500"
-            )}
-          >
+            )}>
             {label}
           </button>
         </Link>
@@ -23,8 +22,7 @@ export const Button = ({ label, path, testId, ...btnAttrs }: ButtonProps) => {
           {...btnAttrs}
           className={cls(
             "bg-red-500 hover:bg-red-600 disabled:bg-neutral-400 text-white shadow-md active:shadow-none w-fit px-2 py-0.5 disabled:shadow-none active:text-gray-200 rounded-md shadow-slate-500"
-          )}
-        >
+          )}>
           {label}
         </button>
       )}

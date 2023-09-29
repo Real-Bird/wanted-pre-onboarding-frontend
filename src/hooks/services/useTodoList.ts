@@ -21,7 +21,7 @@ function useTodoList() {
     id,
     todo,
     isCompleted,
-  }: Partial<ResponseToDoType>) => {
+  }: Pick<ResponseToDoType, "id" | "todo" | "isCompleted">) => {
     const editTodo = editTodoRef.current ? editTodoRef.current.value : todo;
     const { updateTodo: updatedTodoData } = await updateTodo({
       id,

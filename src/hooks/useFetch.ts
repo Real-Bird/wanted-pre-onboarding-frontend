@@ -28,14 +28,14 @@ export function useFetch<T>(asyncFn: () => Promise<T>, hasTrigger?: boolean) {
     if (hasTrigger) return;
     setState({ ...state, loading: true });
     asyncFn()
-      .then((data) =>
+      .then((data: T) =>
         setState({
           ...state,
-          state: data as T,
+          state: data,
           loading: false,
         })
       )
-      .catch((e) => setState({ ...state, loading: false, error: e }));
+      .catch((e: Error) => setState({ ...state, loading: false, error: e }));
     return () =>
       setState({
         ...state,

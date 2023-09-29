@@ -25,8 +25,7 @@ const ToDoProvider = ({ children, toDoService }: ToDoProviderProps) => {
   const deleteTodo = toDoService.deleteTodo.bind(toDoService);
   return (
     <ToDoContext.Provider
-      value={{ createTodo, getTodos, updateTodo, deleteTodo }}
-    >
+      value={{ createTodo, getTodos, updateTodo, deleteTodo }}>
       {children}
     </ToDoContext.Provider>
   );

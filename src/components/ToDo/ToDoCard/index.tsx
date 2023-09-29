@@ -55,8 +55,7 @@ const ToDoCard = ({
             className={cls(
               todo.isCompleted ? "line-through text-gray-400" : "",
               "text-yellow-900 font-medium text-lg"
-            )}
-          >
+            )}>
             {todo.todo}
           </p>
         )}

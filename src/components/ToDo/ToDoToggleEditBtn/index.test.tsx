@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { ToDoToggleEditBtn } from ".";
 
-const mockOnCancelClick = jest.fn();
-const mockOnDeleteClick = jest.fn();
-const mockOnEditClick = jest.fn();
-const mockOnSubmitClick = jest.fn();
+import { ToDoToggleEditBtn } from ".";
+import { expect, vi, describe, it } from "vitest";
+
+const mockOnCancelClick = vi.fn();
+const mockOnDeleteClick = vi.fn();
+const mockOnEditClick = vi.fn();
+const mockOnSubmitClick = vi.fn();
 
 describe("<ToDoToggleBtn />", () => {
   let isEdit = false;
