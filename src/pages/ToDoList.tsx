@@ -10,6 +10,7 @@ const ToDoList = () => {
     onDeleteTodo,
     onEditTodoSubmit,
     todoList,
+    onToggleCompleted,
   } = useTodoList();
   return (
     <Layout title="TO DO LIST" isLogged={true}>
@@ -20,7 +21,7 @@ const ToDoList = () => {
             key={todo.id}
             editTodoRef={editTodoRef}
             onEditTodoSubmit={onEditTodoSubmit}
-            onToggleCompleted={onEditTodoSubmit}
+            onToggleCompleted={onToggleCompleted}
             onDeleteTodo={onDeleteTodo}
             todo={todo}
           />

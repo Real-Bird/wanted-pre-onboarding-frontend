@@ -8,9 +8,9 @@ export class HttpClient {
   }
 
   fetch(pathname: string, options?: RequestInit) {
-    const access_token: { value: string; expiry_time: number } = JSON.parse(
+    const access_token = JSON.parse(
       this.tokenStorage.get() as string
-    );
+    ) as AccessTokenType;
 
     return window.fetch(`${this.BASE_URL}${pathname}`, {
       ...options,
@@ -22,3 +22,5 @@ export class HttpClient {
     });
   }
 }
+
+type AccessTokenType = { value: string; expiry_time: number };

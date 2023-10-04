@@ -30,7 +30,7 @@ export class TokenStorage {
       this.localStorage.remove(this.TOKEN_KEY);
       return;
     }
-    const token: TokenType = JSON.parse(alreadyToken);
+    const token = JSON.parse(alreadyToken) as TokenType;
     if (!token) {
       return;
     }

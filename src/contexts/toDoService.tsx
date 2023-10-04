@@ -14,7 +14,7 @@ const ToDoContext = createContext<
   createTodo: async () => ({ ok: false, newToDoData: toDoDefault }),
   getTodos: async () => ({ ok: false, todos: [] }),
   updateTodo: async () => ({ ok: false, updateTodo: toDoDefault }),
-  deleteTodo: async () => ({ ok: false }),
+  deleteTodo: async () => ({ ok: false, id: -1 }),
 });
 export const useToDoContext = () => useContext(ToDoContext);
 

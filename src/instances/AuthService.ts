@@ -17,7 +17,7 @@ export class AuthService {
     });
 
     if (data.status !== 201) {
-      const res: ResponseError = await data.json();
+      const res = (await data.json()) as ResponseError;
       return {
         ok: false,
         message: res.message,
@@ -27,12 +27,12 @@ export class AuthService {
   }
 
   async signin(body: RequestBodyType) {
-    const data: ResponseSignin = await (
+    const data = (await (
       await this.httpClient.fetch(`auth/signin`, {
         method: "POST",
         body: JSON.stringify(body),
       })
-    ).json();
+    ).json()) as ResponseSignin;
 
     switch (data.statusCode) {
       case 404: {

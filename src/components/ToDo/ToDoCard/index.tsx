@@ -42,9 +42,7 @@ const ToDoCard = ({
       <Input
         type="checkbox"
         defaultChecked={todo.isCompleted}
-        onChange={(e) =>
-          onToggleCompleted({ ...todo, isCompleted: e.currentTarget.checked })
-        }
+        onChange={() => onToggleCompleted(todo.id)}
         className="h-6 w-6 cursor-pointer"
       />
       <div className="bg-stone-300 flex-1 text-center p-1">
@@ -72,7 +70,7 @@ const ToDoCard = ({
 };
 
 interface ToDoCardProps {
-  onToggleCompleted: (body: ResponseToDoType) => void;
+  onToggleCompleted: (id: ResponseToDoType["id"]) => void;
   onEditTodoSubmit: (body: ResponseToDoType) => void;
   onDeleteTodo: (id: number) => void;
   editTodoRef: RefObject<HTMLInputElement>;

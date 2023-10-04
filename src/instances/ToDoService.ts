@@ -8,12 +8,12 @@ export class ToDoService {
 
   async createTodo(todo: string) {
     try {
-      const newToDoData: ResponseToDoType = await (
+      const newToDoData = (await (
         await this.httpClient.fetch("todos", {
           method: "POST",
           body: JSON.stringify({ todo }),
         })
-      ).json();
+      ).json()) as ResponseToDoType;
       return { ok: true, newToDoData };
     } catch (e) {
       const error = e as Error;
@@ -23,11 +23,11 @@ export class ToDoService {
 
   async getTodos() {
     try {
-      const todosData: ResponseToDoType[] = await (
+      const todosData = (await (
         await this.httpClient.fetch("todos", {
           method: "GET",
         })
-      ).json();
+      ).json()) as ResponseToDoType[];
       return { ok: true, todos: todosData };
     } catch (e) {
       const error = e as Error;
@@ -39,7 +39,7 @@ export class ToDoService {
     body: Pick<ResponseToDoType, "id" | "todo" | "isCompleted">
   ) {
     try {
-      const updateTodoData: ResponseToDoType = await (
+      const updateTodoData = (await (
         await this.httpClient.fetch(`todos/${body.id}`, {
           method: "PUT",
           body: JSON.stringify({
@@ -47,7 +47,7 @@ export class ToDoService {
             isCompleted: body.isCompleted,
           }),
         })
-      ).json();
+      ).json()) as ResponseToDoType;
       return { ok: true, updateTodo: updateTodoData };
     } catch (e) {
       const error = e as Error;
@@ -60,7 +60,7 @@ export class ToDoService {
       await this.httpClient.fetch(`todos/${id}`, {
         method: "DELETE",
       });
-      return { ok: true };
+      return { ok: true, id };
     } catch (e) {
       const error = e as Error;
       throw new Error(error.message);

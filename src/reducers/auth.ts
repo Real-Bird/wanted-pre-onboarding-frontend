@@ -18,9 +18,13 @@ const initialState: AuthSliceState = {
 
 export const fetchSignin = createAsyncThunk(
   "auth/fetchSignin",
-  async (body: RequestBodyType) => {
-    const response = await authService.signin(body);
-    return response;
+  async (body: RequestBodyType, { rejectWithValue }) => {
+    try {
+      const response = await authService.signin(body);
+      return response;
+    } catch (e) {
+      return rejectWithValue(e);
+    }
   }
 );
 

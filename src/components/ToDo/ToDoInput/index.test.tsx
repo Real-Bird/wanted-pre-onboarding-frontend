@@ -5,7 +5,7 @@ import { createRef } from "react";
 import userEvent from "@testing-library/user-event";
 import { expect, vi, describe, it } from "vitest";
 
-const mockOnAddNewTodo: (body: unknown) => void = vi.fn();
+const mockOnAddNewTodo: () => void = vi.fn();
 const inputRef = createRef<HTMLInputElement>();
 
 describe("<ToDoInput />", () => {
@@ -27,7 +27,7 @@ describe("<ToDoInput />", () => {
     render(
       <ToDoInput
         newTodoRef={inputRef}
-        onAddNewTodo={() => mockOnAddNewTodo({ todo: inputRef.current?.value })}
+        onAddNewTodo={() => mockOnAddNewTodo()}
       />
     );
 
