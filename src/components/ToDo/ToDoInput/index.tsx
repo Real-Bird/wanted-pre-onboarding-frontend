@@ -1,4 +1,4 @@
-import { MouseEventHandler, RefObject } from "react";
+import { RefObject } from "react";
 import { Button, Input } from "../../common";
 
 export const ToDoInput = ({ newTodoRef, onAddNewTodo }: ToDoInputProps) => {
@@ -9,6 +9,11 @@ export const ToDoInput = ({ newTodoRef, onAddNewTodo }: ToDoInputProps) => {
         label="What's New To Do?"
         type="text"
         testId="new-todo-input"
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            onAddNewTodo();
+          }
+        }}
       />
       <Button
         label="추가"
@@ -21,5 +26,5 @@ export const ToDoInput = ({ newTodoRef, onAddNewTodo }: ToDoInputProps) => {
 
 interface ToDoInputProps {
   newTodoRef: RefObject<HTMLInputElement>;
-  onAddNewTodo: MouseEventHandler<HTMLButtonElement>;
+  onAddNewTodo: () => void;
 }

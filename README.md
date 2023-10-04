@@ -1,15 +1,26 @@
-# 원티드 프리온보딩 프론트엔드 - 선발 과제
+# (개인 프로젝트) Wanted FE To Do List (2023.07~2023.08)
 
-원티드 프리온보딩 프론트엔드 지원자 **김진영**입니다.
+## 개요
 
-## 설치, 환경설정 및 실행 방법
+- 원티드 프리온보딩 인턴십 프론트엔드 11차 선발 과제를 개선한 `To Do List` 사이트
 
-```bash
-git clone https://github.com/Real-Bird/wanted-pre-onboarding-frontend.git
-npm install
-npm start
-```
+## 배포
 
-## 데모 링크
+<https://wtd-fe-rb.netlify.app/>
 
-[Wanted FE To Do List](https://wtd-fe-rb.netlify.app/)
+> #### Demo ID & PWD
+>
+> ID : test-rb@wtd.fe\
+> PWD : testwtdfe
+
+## 사용 스택
+
+- TypeScript, React, React Router, Redux Toolkit, Tailwind CSS, Vite, Vitest
+
+## 주요 기능
+
+### 디자인 시스템과 비즈니스 로직 분리
+
+### 테스트 코드 작성
+
+### CRA에서 Vite로 마이그레이션

@@ -1,58 +1,80 @@
-import { useToDoContext } from "../../contexts/toDoService";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { ResponseToDoType } from "../../instances/ToDoService";
-import { useFetch } from "../useFetch";
+import { useAppDispatch, useAppSelector } from "../rtkHooks";
+import {
+  fetchCreateTodo,
+  fetchDeleteTodo,
+  fetchTodoList,
+  fetchUpdateTodo,
+  selectTodoState,
+} from "../../reducers/todo";
 
 function useTodoList() {
-  const { createTodo, getTodos, updateTodo, deleteTodo } = useToDoContext();
   const newTodoRef = useRef<HTMLInputElement>(null);
   const editTodoRef = useRef<HTMLInputElement>(null);
-  const [todoList, setTodoList] = useState<ResponseToDoType[]>([]);
-  const { state, loading, onFetching } = useFetch(getTodos);
-  const onAddNewTodo = async () => {
+  const {
+    todoList: { todos: todoList },
+    isLoading: loading,
+  } = useAppSelector(selectTodoState);
+  const dispatch = useAppDispatch();
+
+  const onAddNewTodo = useCallback(async () => {
+    console.log(newTodoRef.current?.value);
     const newToDo = newTodoRef.current?.value;
     if (!newToDo) return;
-    const { newToDoData } = await createTodo(newToDo);
+    dispatch(fetchCreateTodo(newToDo));
     newTodoRef.current.value = "";
-    setTodoList([...todoList, newToDoData]);
-  };
+  }, []);
 
   const onEditTodoSubmit = async ({
     id,
-    todo,
-    isCompleted,
-  }: Pick<ResponseToDoType, "id" | "todo" | "isCompleted">) => {
-    const editTodo = editTodoRef.current ? editTodoRef.current.value : todo;
-    const { updateTodo: updatedTodoData } = await updateTodo({
-      id,
-      todo: editTodo,
-      isCompleted,
-    });
-    setTodoList((prevTodoList) =>
-      prevTodoList.map((item) =>
-        item.id === updatedTodoData.id ? updatedTodoData : item
-      )
+  }: Pick<ResponseToDoType, "id" | "isCompleted">) => {
+    const currentTodo = todoList.find((todo) => todo.id === id);
+    if (!currentTodo) {
+      return;
+    }
+    const editTodo = editTodoRef.current?.value;
+    if (editTodo === currentTodo.todo) {
+      return;
+    }
+    dispatch(
+      fetchUpdateTodo({
+        ...currentTodo,
+        todo: editTodo ? editTodo : currentTodo.todo,
+      })
+    );
+  };
+
+  const onToggleCompleted = async (id: ResponseToDoType["id"]) => {
+    const currentTodo = todoList.find((todo) => todo.id === id);
+    if (!currentTodo) {
+      return;
+    }
+    dispatch(
+      fetchUpdateTodo({
+        ...currentTodo,
+        isCompleted: !currentTodo.isCompleted,
+      })
     );
   };
 
   const onDeleteTodo = async (id: number) => {
-    await deleteTodo(id);
-    onFetching();
+    dispatch(fetchDeleteTodo(id));
   };
 
   useEffect(() => {
-    if (state?.ok) {
-      setTodoList(state.todos);
-    }
-  }, [loading, state]);
+    dispatch(fetchTodoList());
+  }, [dispatch]);
 
   return {
     newTodoRef,
     editTodoRef,
     todoList,
+    loading,
     onAddNewTodo,
     onEditTodoSubmit,
     onDeleteTodo,
+    onToggleCompleted,
   };
 }
 
