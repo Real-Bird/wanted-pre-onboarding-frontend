@@ -4,8 +4,8 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { todoService } from "..";
 import { ResponseToDoType } from "../instances";
+import { todoService } from "../Router";
 
 const initialState: TodoSliceState = {
   todoList: {
@@ -47,6 +47,12 @@ export const fetchDeleteTodo = createAsyncThunk(
   }
 );
 
+enum AsyncThunkTypes {
+  pending = "pending",
+  fulfilled = "fulfilled",
+  rejected = "rejected",
+}
+
 export const todoReducer = createSlice({
   name: "todo",
   initialState,
@@ -68,62 +74,48 @@ export const todoReducer = createSlice({
   },
   extraReducers: (builder) => {
     // get todo list
-    builder
-      .addCase(fetchTodoList.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchTodoList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.todoList = action.payload;
-      })
-      .addCase(fetchTodoList.rejected, (state) => {
-        state.isLoading = false;
-      });
+    builder.addCase(fetchTodoList.fulfilled, (state, action) => {
+      state.todoList = action.payload;
+    });
     // create todo
-    builder
-      .addCase(fetchCreateTodo.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchCreateTodo.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.todoList.todos = [
-          ...state.todoList.todos,
-          action.payload.newToDoData,
-        ];
-      })
-      .addCase(fetchCreateTodo.rejected, (state) => {
-        state.isLoading = false;
-      });
+    builder.addCase(fetchCreateTodo.fulfilled, (state, action) => {
+      state.todoList.todos = [
+        ...state.todoList.todos,
+        action.payload.newToDoData,
+      ];
+    });
     // update todo
-    builder
-      .addCase(fetchUpdateTodo.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchUpdateTodo.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.todoList.todos = state.todoList.todos.map((todo) =>
-          todo.id === action.payload.updateTodo.id
-            ? action.payload.updateTodo
-            : todo
-        );
-      })
-      .addCase(fetchUpdateTodo.rejected, (state) => {
-        state.isLoading = false;
-      });
+    builder.addCase(fetchUpdateTodo.fulfilled, (state, action) => {
+      state.todoList.todos = state.todoList.todos.map((todo) =>
+        todo.id === action.payload.updateTodo.id
+          ? action.payload.updateTodo
+          : todo
+      );
+    });
     // delete todo
+    builder.addCase(fetchDeleteTodo.fulfilled, (state, action) => {
+      state.todoList.todos = state.todoList.todos.filter(
+        (todo) => todo.id !== action.payload.id
+      );
+    });
+
     builder
-      .addCase(fetchDeleteTodo.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchDeleteTodo.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.todoList.todos = state.todoList.todos.filter(
-          (todo) => todo.id !== action.payload.id
-        );
-      })
-      .addCase(fetchDeleteTodo.rejected, (state) => {
-        state.isLoading = false;
-      });
+      .addMatcher(
+        (action: PayloadAction) =>
+          action.type.endsWith(AsyncThunkTypes.pending),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        (action: PayloadAction) =>
+          action.type.endsWith(
+            AsyncThunkTypes.fulfilled || AsyncThunkTypes.rejected
+          ),
+        (state) => {
+          state.isLoading = false;
+        }
+      );
   },
 });
 

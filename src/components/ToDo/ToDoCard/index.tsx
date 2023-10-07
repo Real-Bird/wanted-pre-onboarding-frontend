@@ -15,7 +15,7 @@ const ToDoCard = ({
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const onSubmitClick = () => {
-    onEditTodoSubmit({ ...todo });
+    onEditTodoSubmit(todo.id);
     setToggleEdit(false);
   };
 
@@ -33,6 +33,7 @@ const ToDoCard = ({
 
   useEffect(() => {
     if (toggleEdit && editTodoRef.current) {
+      editTodoRef.current.focus();
       editTodoRef.current.value = todo.todo;
     }
   }, [toggleEdit]);
@@ -47,7 +48,7 @@ const ToDoCard = ({
       />
       <div className="bg-stone-300 flex-1 text-center p-1">
         {toggleEdit ? (
-          <Input type="text" ref={editTodoRef} />
+          <Input type="text" ref={editTodoRef} onPressEnter={onSubmitClick} />
         ) : (
           <p
             className={cls(
@@ -71,7 +72,7 @@ const ToDoCard = ({
 
 interface ToDoCardProps {
   onToggleCompleted: (id: ResponseToDoType["id"]) => void;
-  onEditTodoSubmit: (body: ResponseToDoType) => void;
+  onEditTodoSubmit: (id: number) => void;
   onDeleteTodo: (id: number) => void;
   editTodoRef: RefObject<HTMLInputElement>;
   todo: ResponseToDoType;

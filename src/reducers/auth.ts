@@ -4,8 +4,8 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { authService } from "..";
 import { SIGNIN_VALID } from "../constants/auth";
+import { authService } from "../Router";
 
 const initialState: AuthSliceState = {
   response: { ok: false, message: "" },

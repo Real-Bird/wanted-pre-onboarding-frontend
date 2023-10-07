@@ -1,7 +1,8 @@
 import { TokenStorage } from "./TokenStorage";
 
 export class HttpClient {
-  private readonly BASE_URL = "https://www.pre-onboarding-selection-task.shop/";
+  private readonly BASE_URL =
+    "https://www.pre-onboarding-selection-task.store/";
   private readonly tokenStorage;
   constructor(tokenStorage: TokenStorage) {
     this.tokenStorage = tokenStorage;

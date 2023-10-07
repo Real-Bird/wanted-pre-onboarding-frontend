@@ -1,7 +1,10 @@
 import { type InputHTMLAttributes, forwardRef } from "react";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, type = "text", className, testId, ...inputAttrs }, inputRef) => {
+  (
+    { label, type = "text", className, testId, onPressEnter, ...inputAttrs },
+    inputRef
+  ) => {
     const inputField = (
       <input
         {...inputAttrs}
@@ -13,6 +16,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         type={type}
         ref={inputRef}
         data-testid={testId}
+        onKeyUp={(e) => {
+          if (onPressEnter && e.key === "Enter") {
+            onPressEnter();
+          }
+        }}
       />
     );
 
@@ -33,4 +41,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   testId?: string;
+  onPressEnter?: () => void;
 }
