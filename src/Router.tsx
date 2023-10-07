@@ -2,17 +2,20 @@ import { createBrowserRouter } from "react-router-dom";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import ToDoList from "./pages/ToDoList";
-import { HttpClient } from "./instances/HttpClient";
-import { TokenStorage } from "./instances/TokenStorage";
-import { LocalStorage } from "./instances/LocalStorage";
-import { ToDoService } from "./instances/ToDoService";
-import ToDoProvider from "./contexts/toDoService";
 import { TokenValidate } from "./components/TokenValidate";
+import {
+  AuthService,
+  HttpClient,
+  LocalStorage,
+  ToDoService,
+  TokenStorage,
+} from "./instances";
 
-const localStorage = new LocalStorage();
-const tokenStorage = new TokenStorage(localStorage);
-const httpClient = new HttpClient(tokenStorage);
-const toDoService = new ToDoService(httpClient);
+export const localStorage = new LocalStorage();
+export const tokenStorage = new TokenStorage(localStorage);
+export const httpClient = new HttpClient(tokenStorage);
+export const authService = new AuthService(httpClient, tokenStorage);
+export const todoService = new ToDoService(httpClient);
 
 const router = createBrowserRouter([
   {
@@ -29,11 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "todo",
-        element: (
-          <ToDoProvider toDoService={toDoService}>
-            <ToDoList />
-          </ToDoProvider>
-        ),
+        element: <ToDoList />,
       },
     ],
   },

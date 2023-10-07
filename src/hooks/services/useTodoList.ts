@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ResponseToDoType } from "../../instances/ToDoService";
 import { useAppDispatch, useAppSelector } from "../rtkHooks";
 import {
@@ -18,17 +18,14 @@ function useTodoList() {
   } = useAppSelector(selectTodoState);
   const dispatch = useAppDispatch();
 
-  const onAddNewTodo = useCallback(async () => {
-    console.log(newTodoRef.current?.value);
+  const onAddNewTodo = async () => {
     const newToDo = newTodoRef.current?.value;
-    if (!newToDo) return;
+    if (!newToDo || loading) return;
     dispatch(fetchCreateTodo(newToDo));
     newTodoRef.current.value = "";
-  }, []);
+  };
 
-  const onEditTodoSubmit = async ({
-    id,
-  }: Pick<ResponseToDoType, "id" | "isCompleted">) => {
+  const onEditTodoSubmit = async (id: number) => {
     const currentTodo = todoList.find((todo) => todo.id === id);
     if (!currentTodo) {
       return;

@@ -6,19 +6,6 @@ import router from "./Router";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import store from "./store";
-import {
-  AuthService,
-  HttpClient,
-  LocalStorage,
-  ToDoService,
-  TokenStorage,
-} from "./instances";
-
-export const localStorage = new LocalStorage();
-export const tokenStorage = new TokenStorage(localStorage);
-export const httpClient = new HttpClient(tokenStorage);
-export const authService = new AuthService(httpClient, tokenStorage);
-export const todoService = new ToDoService(httpClient);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

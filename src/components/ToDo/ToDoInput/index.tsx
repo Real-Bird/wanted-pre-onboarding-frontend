@@ -9,11 +9,7 @@ export const ToDoInput = ({ newTodoRef, onAddNewTodo }: ToDoInputProps) => {
         label="What's New To Do?"
         type="text"
         testId="new-todo-input"
-        onKeyUp={(e) => {
-          if (e.key === "Enter") {
-            onAddNewTodo();
-          }
-        }}
+        onPressEnter={onAddNewTodo}
       />
       <Button
         label="추가"
