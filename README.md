@@ -1,5 +1,7 @@
 # (개인 프로젝트) Wanted FE To Do List (2023.09~2023.10)
 
+![todo page](https://github.com/Real-Bird/wanted-pre-onboarding-frontend/assets/83404864/7f351aec-4bed-4481-828d-91e27cb5690e)
+
 ## 개요
 
 - 원티드 프리온보딩 인턴십 프론트엔드 11차 선발 과제를 개선한 `To Do List` 사이트
