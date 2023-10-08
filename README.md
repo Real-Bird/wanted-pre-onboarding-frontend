@@ -1,4 +1,4 @@
-# (개인 프로젝트) Wanted FE To Do List (2023.07~2023.08)
+# (개인 프로젝트) Wanted FE To Do List (2023.09~2023.10)
 
 ## 개요
 
