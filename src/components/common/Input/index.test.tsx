@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Input } from ".";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
 describe("<Input />", () => {
   it("render component correctly", () => {
@@ -36,5 +37,22 @@ describe("<Input />", () => {
     userEvent.type(input, "New Value");
 
     expect(input).toHaveValue("New Value");
+  });
+
+  it("correctly called event on press enter", () => {
+    const mockOnPressEnter: () => void = vi.fn();
+
+    render(<Input testId="input-test" onPressEnter={mockOnPressEnter} />);
+
+    const input = screen.getByTestId("input-test");
+
+    fireEvent.keyUp(input, { key: "A" });
+
+    expect(mockOnPressEnter).toHaveBeenCalledTimes(0);
+
+    fireEvent.keyUp(input, { key: "Enter" });
+
+    expect(mockOnPressEnter).toHaveBeenCalled();
+    expect(mockOnPressEnter).toHaveBeenCalledTimes(1);
   });
 });
